@@ -1,0 +1,29 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'measure center mv4'}) do |f| %>
+  <fieldset id="sign_in" class="ba b--transparent ph0 mh0">
+    <legend class="f3 f1-l fw2 ph0 mh0 black-70">Sign In</legend>
+    
+    <div class="mt3">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+    <div class="mv3">
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="mv3">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me, class: "ml2 lh-copy black-70 f4 fw2" %>
+      </div>
+    <% end %>
+
+  </fieldset>
+
+  <div class="submit-field">
+    <%= f.submit "Sign In", class: "ph3 pv2 input-reset ba b--black-70 black-70 bg-transparent dim pointer f4 fw2 dib" %>
+  </div>
+
+  <%= render "devise/shared/links" %>
+
+<% end %>
+

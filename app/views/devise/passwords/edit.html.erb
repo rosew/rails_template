@@ -1,0 +1,25 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'measure center mv4'}) do |f| %>
+
+  <fieldset id="sign_in" class="ba b--transparent ph0 mh0">
+    <legend class="f3 f2-l fw2 ph0 mh0 black-70">Change your password</legend>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <%= f.hidden_field :reset_password_token %>
+
+    <div class="mv3">
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password", placeholder: "Password", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+    <div class="mv3">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password Confirmation", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+  
+  </fieldset>
+
+  <div class="submit-field">
+    <%= f.submit "Sign up", class: "ph3 pv2 input-reset ba b--black-70 black-70 bg-transparent dim pointer f4 fw2 dib" %>
+  </div>
+  
+  <%= render "devise/shared/links" %>
+
+<% end %>

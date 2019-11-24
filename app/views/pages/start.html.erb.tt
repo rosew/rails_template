@@ -1,0 +1,9 @@
+<section class="flex-ns mt4 items-center">
+  <div class="mw6 ph5">
+    <%%= image_tag("flower.jpg", class: "ba b--black-20") %>
+  </div>
+  <div class="tc tl-ns ph3">
+    <h1 class="f3 f1-l fw2 mb3 mt4 mt0-ns"><%= camelized.underscore.titleize %></h1>
+    <h2 class="f5 f3-l fw1 mb4 mb5-l lh-title">Come back soon for more details...</h2>
+  </div>
+</section>

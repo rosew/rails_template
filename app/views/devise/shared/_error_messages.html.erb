@@ -1,0 +1,7 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" class="dark-red mw7 center ph4 pv2 mt3 br2-ns ba b--dark-red">
+    <% resource.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+<% end %>

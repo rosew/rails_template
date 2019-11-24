@@ -1,0 +1,31 @@
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'measure center mv4'}) do |f| %>
+  <fieldset id="sign_in" class="ba b--transparent ph0 mh0">
+    <legend class="f3 f1-l fw2 ph0 mh0 black-70">Sign Up</legend>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+    
+    <div class="mt3">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+    <div class="mv3">
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+    <div class="mv3">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password Confirmation", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+    <div class="f6 mv3 db lh-copy f5">
+      Clicking sign up confirms you are 13 years of age or older and agree to the site Terms and
+      Conditions and Privacy Policy. If you are a student please ask your parent or teacher to
+      create your account.
+    <div>
+
+  </fieldset>
+
+  <div class="submit-field">
+    <%= f.submit "Sign Up", class: "ph3 pv2 input-reset ba b--black-70 black-70 bg-transparent dim pointer f4 fw2 dib" %>
+  </div>
+  
+<% end %>

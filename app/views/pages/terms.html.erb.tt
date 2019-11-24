@@ -1,0 +1,32 @@
+<h1>Terms of Use</h1>
+
+<h3>Content</h3>
+<p class="lh-copy">
+User content is anything you post on <a href="/" class="link"><%= camelized.underscore.titleize %></a>, including but not limited to text and pictures.
+</p>
+
+<p class="lh-copy">
+Only post user content that you have the legal right to share.
+</p>
+
+<p class="lh-copy">
+Only post user content that is legal and appropriate to the context of the site.
+</p>
+
+<p class="lh-copy">
+You retain your rights to all user content posted on the site.
+</p>
+
+<p class="lh-copy">
+All site content, except your own user content, is for use only on the site.
+</p>
+
+<h3>Age</h3>
+<p class="lh-copy">
+Use of this website is limited to people who are thirteen years of age or older.
+</p>
+
+<h3>Termination</h3>
+<p class="lh-copy">
+Violations of the Terms of Use can lead to immediate suspension and/or termination of a user's account.
+</p>

@@ -1,0 +1,19 @@
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }, html: {class: 'measure center mv4'}) do |f| %>
+  <fieldset id="sign_in" class="ba b--transparent ph0 mh0">
+    <legend class="f3 f2-l fw2 ph0 mh0 black-70">Resend confirmation instructions</legend>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="mt3">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+    </div>
+
+  </fieldset>
+
+  <div class="submit-field">
+    <%= f.submit "Resend", class: "mt3 ph3 pv2 input-reset ba b--black-70 black-70 bg-transparent dim pointer f4 fw2 dib" %>
+  </div>
+
+  <%= render "devise/shared/links" %>
+
+<% end %>
