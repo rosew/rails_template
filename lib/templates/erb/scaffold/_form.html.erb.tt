@@ -1,0 +1,34 @@
+<%%= form_with(model: <%= model_resource_name %>, local: true, html: {class: 'measure mv4'}) do |form| %>
+  <%% if <%= singular_table_name %>.errors.any? %>
+    <div id="error_explanation">
+      <h2><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+
+      <ul>
+        <%% <%= singular_table_name %>.errors.full_messages.each do |message| %>
+          <li><%%= message %></li>
+        <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+<% attributes.each do |attribute| -%>
+  <div class="mv3">
+<% if attribute.password_digest? -%>
+    <%%= form.password_field :password, placeholder: "Password", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+  </div>
+
+  <div class="mv3">
+    <%%= form.password_field :password_confirmation, placeholder: "Password Confirmation", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+<% elsif attribute.attachments? -%>
+    <%%= form.label :<%= attribute.column_name %> %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true %>
+<% else -%>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, placeholder: "<%= attribute.column_name.titleize %>", class: "pa2 input-reset ba b--black-70 bg-transparent w-100" %>
+<% end -%>
+  </div>
+
+<% end -%>
+  <div class="submit-field">
+    <%%= form.submit class: "ph3 pv2 input-reset ba b--black-70 black-70 bg-transparent dim pointer f4 fw3 dib" %>
+  </div>
+<%% end %>
