@@ -45,11 +45,11 @@
     <main class="w-100 bt b--black-10 bg-white">
       <section class="bg-white black-70 bt b--black-10">
         <div class="ph3 ph5-ns pv4">
-          <%% flash.each do |key, value| %>
-            <div class="flex items-center justify-center pa2 mb3 <%%= alert_colors(key) %>">
-              <span class="lh-title ml3"><%%= value %></span>
-            </div>
-          <%% end %>
+          <div id="flash_messages" class="w-100">
+            <%% flash.each do |flash_name, message| %>
+              <%%= render partial: "layouts/flash", locals: { flash_name: flash_name, message: message } %>
+            <%% end %>
+          </div>
 
           <%%= yield %>
         </div>

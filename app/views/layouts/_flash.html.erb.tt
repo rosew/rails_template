@@ -1,0 +1,3 @@
+<div class="flex items-center justify-center pa2 mb3 <%%= alert_colors(flash_name) %>">
+  <span class="lh-title ml3"><%%= message %></span>
+</div>
