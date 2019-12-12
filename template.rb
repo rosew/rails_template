@@ -8,6 +8,8 @@ end
 # https://apidock.com/rails/v6.0.0/Rails/Generators/AppGenerator
 # https://www.rubydoc.info/github/wycats/thor/Thor/Actions
 # https://guides.rubyonrails.org/generators.html
+# https://github.com/rails/rails/blob/master/railties/lib/rails/generators/actions.rb
+# https://github.com/rails/rails/blob/master/railties/lib/rails/generators/named_base.rb
 
 # Useful variables
 # app_name - snake case app name
@@ -36,6 +38,7 @@ directory "#{template_root}/app/views/application", "app/views/application"
 remove_file "app/views/layouts/application.html.erb"
 template "#{template_root}/app/views/layouts/application.html.erb.tt", "app/views/layouts/application.html.erb"
 template "#{template_root}/app/views/layouts/_flash.html.erb.tt", "app/views/layouts/_flash.html.erb"
+template "#{template_root}/app/views/layouts/_update_flash.js.erb.tt", "app/views/layouts/_update_flash.js.erb"
 
 inside 'app/helpers' do
   inject_into_file 'application_helper.rb', after: "module ApplicationHelper\n" do
@@ -89,10 +92,12 @@ Dir.glob('db/migrate/*_create_users.rb').each do |file_name|
   gsub_file file_name, "# add_index :users, :confirmation_token", "add_index :users, :confirmation_token"
 end
 
-# Modify the default scaffold templates
+# Modify the default scaffold templates & create some alternative scaffold templates
 # Note - directory command would not copy without trying to parse the .tt files 
-empty_directory "lib/templates/erb/scaffold"
-run "cp #{template_root}/lib/templates/erb/scaffold/* lib/templates/erb/scaffold"
+empty_directory "lib/templates"
+empty_directory "lib/generators"
+run "cp -r #{template_root}/lib/templates/* lib/templates"
+run "cp -r #{template_root}/lib/generators/* lib/generators"
 
 environment do
   <<-RUBY
@@ -103,6 +108,40 @@ environment do
     end
   RUBY
 end
+
+# Get an initial scaffold set up so there's a functioning landing page for registered users
+def get_scaffold_type
+  scaffold_type_select = ask("
+  What scaffold would you like to start with?
+    A for ajax_scaffold
+    S for scaffold
+  Enter: ")
+  
+  case scaffold_type_select
+  when "A"
+    "ajax_scaffold"
+  else
+    "scaffold"
+  end
+end
+scaffold_type = get_scaffold_type
+
+model_name = ask("
+  Enter the name of your first model (ie Item): ")
+
+model_attributes = ask("
+  Enter the attribute pairs for the model (ie name:string description:text).
+  The first two non-password attributes will be in the index table.
+  Enter:  ")
+
+generate "#{scaffold_type} #{model_name} #{model_attributes}"
+
+# Set the registered user home page
+route "
+  authenticated :user do
+    root to: \"#{model_name.pluralize.underscore}#index\", as: :user_root
+  end
+"
 
 # Authorization
 gem 'pundit'
