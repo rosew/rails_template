@@ -20,7 +20,8 @@ template_root = File.dirname path # path to the template directory
 # Add localhost setting to the database config so it plays nice with my postgres setup
 inside 'config' do
   ['development', 'test'].each do |env_name|
-    inject_into_file 'database.yml', after: "database: #{app_name}_#{env_name}\n" do 
+    # Note: inject_into_file requires force: true when injecting the same content in multiple locations
+    inject_into_file 'database.yml', force: true, after: "database: #{app_name}_#{env_name}\n" do 
       <<-RUBY
   host: localhost
       RUBY
