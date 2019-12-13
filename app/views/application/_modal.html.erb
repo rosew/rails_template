@@ -1,14 +1,16 @@
 <div id="<%= modal_id %>" class="modal dn aspect-ratio--object overflow-auto bg-black-40 pt4 pt6-ns">
   <div class="bg-white center pa3 w-80 ba b--silver">
     <div class="w-100 tr b f3">
-      <div class="link dim black-60 pointer", onclick="hideModal('new_item');">X</div>
+      <div class="link dim black-60 pointer", onclick="hideModal('<%= modal_id %>');">X</div>
     </div>
     <div class='measure center mb4'>
       <h1 class="w-100 ph0 mh0 mt0 f2 f1-l black-70 mw8">
         <div class="tl fw2"><%= title %></div>
       </h1>
 
-      <%= data %>
+      <div id="<%= modal_id %>_content">
+        <%= data %>
+      </div>
 
     </div>
   </div>

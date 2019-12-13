@@ -1,11 +1,3 @@
-<% first_attribute = attributes.reject(&:password_digest?).first %>
-<% second_attribute = attributes.reject(&:password_digest?).second %>
-
 <tr id="<%= singular_table_name %>_<%%= item.id %>" class="stripe-dark">
-  <td class="pa3"><%%= link_to item.<%= first_attribute.column_name %>, item, class: "b black-70 link dim" %></td>
-  <td class="pa3"><%%= item.<%= second_attribute.column_name %> %></td>
-  <td class="pa3 tr">
-    <%%= link_to 'Edit', edit_<%= singular_route_name %>_path(item), class: "b black-70 link dim mr2" %>
-    <%%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }, class: "b black-70 link dim" %>
-  </td>
+  <%%= render partial: "item_content", object: item %>
 </tr>

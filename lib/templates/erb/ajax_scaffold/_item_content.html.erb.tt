@@ -1,0 +1,8 @@
+<% first_attribute = attributes.reject(&:password_digest?).first %>
+<% second_attribute = attributes.reject(&:password_digest?).second %>
+<td class="pa3"><%%= link_to item_content.<%= first_attribute.column_name %>, item_content, class: "b black-70 link dim" %></td>
+<td class="pa3"><%%= item_content.<%= second_attribute.column_name %> %></td>
+<td class="pa3 tr">
+  <div class="di b black-70 link dim mr2 pointer", onclick="showModal('<%= singular_table_name %>_<%%= item_content.id %>_modal');">Edit</div>
+  <%%= link_to 'Destroy', item_content, method: :delete, data: { confirm: 'Are you sure?' }, class: "di b black-70 link dim" %>
+</td>
