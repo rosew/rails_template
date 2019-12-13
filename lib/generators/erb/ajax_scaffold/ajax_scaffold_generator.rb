@@ -21,7 +21,7 @@ class Erb::AjaxScaffoldGenerator < Erb::Generators::ScaffoldGenerator
     end
     
     def available_js_views
-      %w(create update)
+      %w(create update destroy)
     end
   
 end
