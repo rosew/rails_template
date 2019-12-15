@@ -77,6 +77,7 @@ generate "devise User"
 directory "#{template_root}/app/views/devise", "app/views/devise"
 environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", env: 'development'
 environment "config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], port: 3000 }", env: 'production'
+run "cp -r #{template_root}/test/* test/" # Default devise test setup needs details
 
 # Add confirmable and trackable to my devise model
 gsub_file "app/models/user.rb", "devise", "devise :confirmable, :trackable,"
