@@ -17,7 +17,7 @@ class Erb::AjaxScaffoldGenerator < Erb::Generators::ScaffoldGenerator
   private
     # Override parent function to add and remove some files 
     def available_views
-      %w(_item _item_content index edit show _form)
+      %w(_item _item_content index show _form)
     end
     
     def available_js_views

@@ -9,7 +9,7 @@
 <h1 class="dt w-100 ph0 mh0 f2 f1-l black-70">
   <div class="dtc w-50 tl fw2"><%= plural_table_name.titleize %></div>
   <div class="dtc w-50 tr">
-    <div class="black-70 link dim pointer", onclick="showModal('new_<%= singular_table_name %>_modal');">+</div>
+    <a class="black-70 link dim pointer", onclick="showModal('new_<%= singular_table_name %>_modal');">+</a>
   <div>
 </h1>
 

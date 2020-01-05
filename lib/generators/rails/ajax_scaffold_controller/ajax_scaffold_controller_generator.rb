@@ -8,4 +8,6 @@ class Rails::AjaxScaffoldControllerGenerator < Rails::Generators::ScaffoldContro
     invoke template_engine unless options.api?
   end
 
+  hook_for :test_framework, as: :ajax_scaffold
+
 end
