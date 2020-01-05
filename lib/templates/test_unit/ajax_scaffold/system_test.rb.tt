@@ -34,8 +34,8 @@ class <%= class_name.pluralize %>Test < ApplicationSystemTestCase
     <%- end -%>
     click_on "Create <%= human_name %>"
 
-    assert_text "<%= human_name %> was successfully created"
-    click_on "<%= class_name.pluralize.titleize %>"
+    assert_text "New <%= singular_table_name %> created"
+    assert_selector "h1", text: "<%= class_name.pluralize.titleize %>"
   end
 
   test "updating a <%= human_name %> when signed in" do
@@ -52,8 +52,8 @@ class <%= class_name.pluralize %>Test < ApplicationSystemTestCase
     <%- end -%>
     click_on "Update <%= human_name %>"
 
-    assert_text "<%= human_name %> was successfully updated"
-    click_on "<%= class_name.pluralize.titleize %>"
+    assert_text "<%= human_name %> was updated"
+    assert_selector "h1", text: "<%= class_name.pluralize.titleize %>"
   end
 
   test "destroying a <%= human_name %> when signed in" do
