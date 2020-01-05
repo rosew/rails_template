@@ -2,6 +2,11 @@
 
 one:
   email: one@test.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  confirmed_at: <%= 1.day.ago.to_s(:db) %>
 
 two:
   email: two@test.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  confirmed_at: <%= 1.day.ago.to_s(:db) %>
+

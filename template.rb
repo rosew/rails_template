@@ -70,30 +70,6 @@ template "#{template_root}/app/views/pages/start.html.erb.tt", "app/views/pages/
 # Set the homepage to the static start page
 route "root to: 'high_voltage/pages#show', id: 'start'"
 
-# Authentication
-gem 'devise'
-generate "devise:install"
-generate "devise User"
-directory "#{template_root}/app/views/devise", "app/views/devise"
-environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", env: 'development'
-environment "config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], port: 3000 }", env: 'production'
-run "cp -r #{template_root}/test/* test/" # Default devise test setup needs details
-
-# Add confirmable and trackable to my devise model
-gsub_file "app/models/user.rb", "devise", "devise :confirmable, :trackable,"
-Dir.glob('db/migrate/*_create_users.rb').each do |file_name|
-  gsub_file file_name, "# t.integer  :sign_in_count", "t.integer  :sign_in_count"
-  gsub_file file_name, "# t.datetime :current_sign_in_at", "t.datetime :current_sign_in_at"
-  gsub_file file_name, "# t.datetime :last_sign_in_at", "t.datetime :last_sign_in_at"
-  gsub_file file_name, "# t.inet     :current_sign_in_ip", "t.inet     :current_sign_in_ip"
-  gsub_file file_name, "# t.inet     :last_sign_in_ip", "t.inet     :last_sign_in_ip"
-  gsub_file file_name, "# t.string   :confirmation_token", "t.string   :confirmation_token"
-  gsub_file file_name, "# t.datetime :confirmed_at", "t.datetime :confirmed_at"
-  gsub_file file_name, "# t.datetime :confirmation_sent_at", "t.datetime :confirmation_sent_at"
-  gsub_file file_name, "# t.string   :unconfirmed_email", "t.string   :unconfirmed_email"
-  gsub_file file_name, "# add_index :users, :confirmation_token", "add_index :users, :confirmation_token"
-end
-
 # Modify the default scaffold templates & create some alternative scaffold templates
 # Note - directory command would not copy without trying to parse the .tt files 
 empty_directory "lib/templates"
@@ -109,6 +85,31 @@ environment do
       g.scaffold_stylesheet false
     end
   RUBY
+end
+
+# Authentication
+gem 'devise'
+generate "devise:install"
+generate "devise User"
+directory "#{template_root}/app/views/devise", "app/views/devise"
+environment "config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", env: 'development'
+environment "config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], port: 3000 }", env: 'production'
+# For some reason the user fixture turns out empty so we start projects with a valid one
+run "cp -r #{template_root}/test/* test/"
+
+# Add confirmable and trackable to my devise model
+gsub_file "app/models/user.rb", "devise", "devise :confirmable, :trackable,"
+Dir.glob('db/migrate/*_create_users.rb').each do |file_name|
+  gsub_file file_name, "# t.integer  :sign_in_count", "t.integer  :sign_in_count"
+  gsub_file file_name, "# t.datetime :current_sign_in_at", "t.datetime :current_sign_in_at"
+  gsub_file file_name, "# t.datetime :last_sign_in_at", "t.datetime :last_sign_in_at"
+  gsub_file file_name, "# t.inet     :current_sign_in_ip", "t.inet     :current_sign_in_ip"
+  gsub_file file_name, "# t.inet     :last_sign_in_ip", "t.inet     :last_sign_in_ip"
+  gsub_file file_name, "# t.string   :confirmation_token", "t.string   :confirmation_token"
+  gsub_file file_name, "# t.datetime :confirmed_at", "t.datetime :confirmed_at"
+  gsub_file file_name, "# t.datetime :confirmation_sent_at", "t.datetime :confirmation_sent_at"
+  gsub_file file_name, "# t.string   :unconfirmed_email", "t.string   :unconfirmed_email"
+  gsub_file file_name, "# add_index :users, :confirmation_token", "add_index :users, :confirmation_token"
 end
 
 # Get an initial scaffold set up so there's a functioning landing page for registered users
