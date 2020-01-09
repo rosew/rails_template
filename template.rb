@@ -3,6 +3,25 @@ def render_file(path)
   file = IO.read(path)
 end
 
+# get_from_hash example usage
+# scaffold_type = get_from_hash(
+#  "What scaffold would you like to start with?",
+#  { "default" => "ajax_scaffold",
+#    "S" => "scaffold" })
+def get_from_hash(question, selections)
+  default_selection = selections.delete("default")
+  
+  ask_str = "#{question}\n"
+  ask_str += "    Default is #{default_selection}\n"
+  selections.each do |response, selection|
+    ask_str += "    #{response} for #{selection}\n"
+  end
+  ask_str += "  Enter: "
+
+  response = ask(ask_str)
+  selections.has_key?(response) ? selections[response] : selections["default"]
+end
+
 # Available commands and docs
 # https://guides.rubyonrails.org/rails_application_templates.html
 # https://apidock.com/rails/v6.0.0/Rails/Generators/AppGenerator
@@ -83,12 +102,25 @@ environment do
     # Other options @ https://github.com/rails/rails/blob/master/railties/lib/rails/generators/rails/scaffold/scaffold_generator.rb
     config.generators do |g|
       g.scaffold_stylesheet false
-    end
+    endrequire "../blog/app/controllers/posts_controller"
+    
   RUBY
 end
 
+# scaffold_type = get_from_hash(
+#  "What scaffold would you like to start with?",
+#  { "default" => "ajax_scaffold",
+#    "S" => "scaffold" })
+api_support = get_from_hash(
+  "Would you like to support an api?",
+  { "default" => "json",
+    "N" => "none" })
+
 # Authentication
 gem 'devise'
+if (api_support != "none")
+  gem 'devise-jwt', '~> 0.5.9'
+end
 generate "devise:install"
 generate "devise User"
 directory "#{template_root}/app/views/devise", "app/views/devise"
@@ -96,6 +128,30 @@ environment "config.action_mailer.default_url_options = { host: 'localhost', por
 environment "config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'], port: 3000 }", env: 'production'
 # For some reason the user fixture turns out empty so we start projects with a valid one
 run "cp -r #{template_root}/test/* test/"
+
+# Add devise API authentication
+if (api_support != "none")
+  inside 'config/initializers' do
+    gsub_file "devise.rb", "# config.navigational_formats = ['*/*', :html]", "config.navigational_formats = ['*/*', :html, :json]"
+
+    inject_into_file 'devise.rb', after: "module ApplicationHelper\n" do
+      <<-RUBY
+
+    def alert_colors(key)
+      case key
+      when "alert"
+        "ba b--red red"
+      when "notice"
+        "ba b--blue blue"
+      else
+        "bg-light-gray navy"
+      end
+    end
+
+      RUBY
+    end
+  end
+end
 
 # Add confirmable and trackable to my devise model
 gsub_file "app/models/user.rb", "devise", "devise :confirmable, :trackable,"
@@ -113,21 +169,10 @@ Dir.glob('db/migrate/*_create_users.rb').each do |file_name|
 end
 
 # Get an initial scaffold set up so there's a functioning landing page for registered users
-def get_scaffold_type
-  scaffold_type_select = ask("
-  What scaffold would you like to start with?
-    A for ajax_scaffold
-    S for scaffold
-  Enter: ")
-  
-  case scaffold_type_select
-  when "A"
-    "ajax_scaffold"
-  else
-    "scaffold"
-  end
-end
-scaffold_type = get_scaffold_type
+scaffold_type = get_from_hash(
+  "What scaffold would you like to start with?",
+  { "default" => "ajax_scaffold",
+    "S" => "scaffold" })
 
 model_name = ask("
   Enter the name of your first model (ie Item): ")
