@@ -60,8 +60,15 @@ inside 'app/helpers' do
   end
 end
 
-# Setup static pages
+# Add Gems
 gem 'high_voltage' # Static pages
+gem 'devise' # Authentication
+# gem 'pundit' # Authorization
+gem 'sendgrid-ruby' # Sendgrid for sending email
+run "bundle install"
+
+
+# Setup static pages - High Voltage
 empty_directory "app/views/pages"
 template "#{template_root}/app/views/pages/privacy.html.erb.tt", "app/views/pages/privacy.html.erb"
 template "#{template_root}/app/views/pages/terms.html.erb.tt", "app/views/pages/terms.html.erb"
@@ -88,7 +95,6 @@ environment do
 end
 
 # Authentication
-gem 'devise'
 generate "devise:install"
 generate "devise User"
 directory "#{template_root}/app/views/devise", "app/views/devise"
@@ -146,9 +152,6 @@ route "
   end
 "
 
-# Authorization
-gem 'pundit'
-
-# Other useful gems
-gem 'sendgrid-ruby' # Sendgrid for sending email
+rails_command "db:create"
+rails_command "db:migrate"
 

@@ -31,7 +31,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.json { render :show, status: :created, location: <%= "@#{singular_table_name}" %> }
       else
         format.html { render :new }
-        format.js { render partial: "application/update_html", locals: { container_id: 'new_<%= singular_table_name %>_content', partial_name: '<%= plural_table_name %>/form', locals: { <%= singular_table_name %>: @<%= singular_table_name %> } } }
+        format.js { render partial: "application/update_html", locals: { container_id: 'new_<%= singular_table_name %>_modal_content', partial_name: '<%= plural_table_name %>/form', locals: { <%= singular_table_name %>: @<%= singular_table_name %> } } }
         format.json { render json:  <%= "@#{orm_instance.errors}" %>, status: :unprocessable_entity }
       end
     end
@@ -47,7 +47,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.json { render :show, status: :ok, location: <%= "@#{singular_table_name}" %> }
       else
         format.html { render :edit }
-        format.js { render partial: "application/update_html", locals: { container_id: "<%= singular_table_name %>_#{@<%= singular_table_name %>.id}_content", partial_name: '<%= plural_table_name %>/form', locals: { <%= singular_table_name %>: @<%= singular_table_name %> } } }
+        format.js { render partial: "application/update_html", locals: { container_id: "<%= singular_table_name %>_#{@<%= singular_table_name %>.id}_modal_content", partial_name: '<%= plural_table_name %>/form', locals: { <%= singular_table_name %>: @<%= singular_table_name %> } } }
         format.json { render json: <%= "@#{orm_instance.errors}" %>, status: :unprocessable_entity }
       end
     end
